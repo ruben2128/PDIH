@@ -90,15 +90,33 @@ void pausa(){
     int86(0x16, &inregs, &outregs);
 }
 
-int getche(){
+int mi_getchar(){
     union REGS inregs, outregs;
     int caracter;
-
+    
     inregs.h.ah = 1;
     int86(0x21, &inregs, &outregs);
 
     caracter = outregs.h.al;
     return caracter;
+}
+
+void mi_putchar(char c){
+	 union REGS inregs, outregs;
+
+	 inregs.h.dl = c;
+     inregs.h.ah = 2;
+	 
+	 int86(0x21, &inregs, &outregs);
+}
+
+void getche(){
+    int caracter;
+    printf("Pulsa una tecla: ");
+    caracter=mi_getchar();
+    printf("\n");
+    printf("Pulsaste la tecla:");
+    mi_putchar(caracter);
 }
 
 void dibujar_pixel(int x, int y, BYTE C){
@@ -215,10 +233,9 @@ int main(){
     setvideomode(MODOTEXTO);
 
     escribir_char_con_color('r');
-    
-    printf("\nIntroduce un caracter: ");
-    caracter = getche();
-    printf("\nCaracter leido en la tabla ASCII: %d\n", caracter);
+
+    printf("\n");
+    getche();
 
     pausa();
     setvideomode(MODOGRAFICO);
