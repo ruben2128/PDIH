@@ -1,7 +1,7 @@
-from barcode import EAN13
+from barcode import EAN8
 
-valor = '841234567890'
+valor = '8412345'
 
-resultado = EAN13(valor)
+resultado = EAN8(valor)
 
-resultado.save("Resultado")
+resultado.save("ResultadoEjemploEAN8")
